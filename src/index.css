@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #090909;
+    --bg-surface: #171717;
+    --bg-elevated: #202020;
+    --accent-red: #b91c1c;
+    --accent-gold: #d4af37;
+    --ink-main: #f8f5ef;
+    --ink-muted: #a8a29e;
+  }
+
+  html {
+    font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--ink-main);
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090909;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c2c2c;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
