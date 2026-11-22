@@ -6,7 +6,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/',
+    base: '/elqalyouby-pizza-crepe/',
     plugins: [
       react(),
       tailwindcss(),
