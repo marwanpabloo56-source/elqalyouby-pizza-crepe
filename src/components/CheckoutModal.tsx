@@ -284,10 +284,11 @@ export function CheckoutModal({
 
                 <div>
                   <label htmlFor="cust-branch" className="block text-xs font-medium text-[#A8A29E] mb-1.5">
-                    الفرع الأقرب لك
+                    الفرع
                   </label>
                   <select
                     id="cust-branch"
+                    disabled={branches.length === 1}
                     value={customer.preferredBranchId}
                     onChange={(e) =>
                       setCustomer((c) => ({ ...c, preferredBranchId: e.target.value }))

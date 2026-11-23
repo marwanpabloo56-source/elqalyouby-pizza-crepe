@@ -140,7 +140,7 @@ function loadOrInitializeDb(): RestaurantDatabase {
           ? parsed.items
           : fallback.items,
         branches: Array.isArray(parsed.branches) && parsed.branches.length > 0
-          ? parsed.branches
+          ? parsed.branches.filter(branch => !['qanater', 'gesr-el-suez', 'north-coast'].includes(branch.id))
           : fallback.branches,
         settings: parsed.settings && typeof parsed.settings === 'object'
           ? { ...fallback.settings, ...parsed.settings }

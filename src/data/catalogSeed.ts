@@ -40,9 +40,6 @@ export const INITIAL_MENU_ITEMS: MenuItem[] = records.map(line => {
 export const DISH_IMAGE_PATHS: Record<string,string> = {};
 export const VERIFIED_BRANCHES: BranchInfo[] = [
   {id:'shubra-khalafawy',name:'فرع شبرا — الخلفاوي',address:'5 شارع معمل الألبان، أمام مسجد الفتح، ميدان المماليك، شبرا مصر',hasVerifiedStreetAddress:true,phones:['0222096142','01011489222','01124448924','01226267078'],complaintsWhatsapp:'01092929026',management:'كريم إبراهيم · محمد إبراهيم'},
-  {id:'qanater',name:'فرع القناطر الخيرية',address:'كورنيش النيل، القناطر الخيرية',hasVerifiedStreetAddress:false,phones:['43176801']},
-  {id:'gesr-el-suez',name:'فرع جسر السويس',address:'أبراج الفاروقية، جسر السويس',hasVerifiedStreetAddress:false,phones:['26204255']},
-  {id:'north-coast',name:'فرع الساحل الشمالي',address:'الساحل الشمالي',hasVerifiedStreetAddress:false,phones:['01013882888']}
 ];
 export const INITIAL_SETTINGS: RestaurantSettings = {
   restaurantName:'بيتزا وكريب القليوبي', tagline:'أحفاد أبو سريع — الطعم اللي ملوش منافس',

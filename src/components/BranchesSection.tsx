@@ -10,15 +10,9 @@ export function BranchesSection({ branches }: BranchesSectionProps) {
     <section id="branches" className="py-12 md:py-16 bg-[#0D0D0D] border-b border-[#D4AF37]/15">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mb-8">
-          <p className="text-xs sm:text-sm font-semibold text-[#D4AF37] mb-1.5">
-            الفروع الرسمية الموثقة
-          </p>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F8F5EF] text-balance mb-2">
-            فروع بيتزا وكريب القليوبي
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F8F5EF]">
+            العنوان والتواصل
           </h2>
-          <p className="text-sm sm:text-base text-[#A8A29E] leading-relaxed">
-            جميع بيانات الفروع وأرقام التواصل مأخوذة مباشرة من المنيو الرسمي المعتمد.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
