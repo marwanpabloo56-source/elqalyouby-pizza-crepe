@@ -37,6 +37,8 @@ import { AdminDashboardPage } from './components/AdminDashboardPage';
 const CART_STORAGE_KEY = 'elqalyouby_cart_v3';
 const INTRO_SEEN_KEY = 'elqalyouby_intro_seen_v2';
 
+const defaultPhotos = new Map(INITIAL_MENU_ITEMS.map(item => [item.id, item.image]));
+
 function readCartStorage(): CartItem[] {
   try {
     const raw = window.localStorage.getItem(CART_STORAGE_KEY);
@@ -106,7 +108,12 @@ export default function App() {
       if (!res.ok) return;
       const data = (await res.json()) as PublicCatalogPayload;
       if (Array.isArray(data.categories)) setCategories(data.categories);
-      if (Array.isArray(data.items)) setMenuItems(data.items);
+      if (Array.isArray(data.items)) {
+        setMenuItems(data.items.map(item => ({
+          ...item,
+          image: item.image || defaultPhotos.get(item.id) || null,
+        })));
+      }
       if (Array.isArray(data.branches)) setBranches(data.branches);
       if (data.settings) setSettings(data.settings);
     } catch {

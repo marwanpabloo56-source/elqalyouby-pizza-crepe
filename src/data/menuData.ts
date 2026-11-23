@@ -52,7 +52,10 @@ const itemPhotoKeys: Record<string,keyof typeof photoFiles> = {
   "sr-9": "saroukhMixMeat"
 };
 export const INITIAL_MENU_ITEMS = seedItems.map(item => ({
-  ...item, image: itemPhotoKeys[item.id] ? DISH_IMAGES[itemPhotoKeys[item.id]] : null,
+  ...item,
+  image: itemPhotoKeys[item.id]
+    ? DISH_IMAGES[itemPhotoKeys[item.id]]
+    : assetBase + 'assets/menu/' + item.id + '.webp',
 }));
 const categoryPhotoKeys = ["pizzaMargherita","pizzaOrientalSupreme","feteerChicken","feteerMozzarella","feteerLotus","crepeChickenShawarma","feteerMozzarella","feteerSweetNuts","saroukhMixMeat","pizzaCheeseLovers"];
 export const INITIAL_CATEGORIES = seedCategories.map((cat,i) => ({
