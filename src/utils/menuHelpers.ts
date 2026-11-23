@@ -54,7 +54,7 @@ export function formatWhatsappOrderMessage(params: {
   const branch = branches.find((b) => b.id === customer.preferredBranchId);
 
   const lines: string[] = [
-    `*طلب جديد (معاينة عرض تجريبي) — ${settings.restaurantName}*`,
+    `*طلب جديد — ${settings.restaurantName}*`,
     `━━━━━━━━━━━━━━━━━━━━`,
     `*بيانات العميل:*`,
     `• الاسم: ${customer.name || 'غير محدد'}`,
@@ -87,11 +87,10 @@ export function formatWhatsappOrderMessage(params: {
   lines.push(`━━━━━━━━━━━━━━━━━━━━`);
   lines.push(`• إجمالي الأصناف: ${subtotal} ج.م`);
   if (settings.deliveryFee > 0) {
-    lines.push(`• رسوم التوصيل (تجريبية): ${settings.deliveryFee} ج.م`);
+    lines.push(`• رسوم التوصيل: ${settings.deliveryFee} ج.م`);
   }
   lines.push(`• *الإجمالي النهائي: ${total} ج.م*`);
   lines.push(``);
-  lines.push(`_ملاحظة: هذه معاينة رسالة طلب لموقع عرض تجريبي._`);
 
   return lines.join('\n');
 }

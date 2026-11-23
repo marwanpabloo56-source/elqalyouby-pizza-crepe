@@ -346,7 +346,7 @@ export function CartDrawer({
               onClick={onProceedToCheckout}
               className="w-full py-3.5 px-5 rounded-lg bg-[#B91C1C] hover:bg-[#991B1B] text-white font-semibold text-base transition-colors cursor-pointer min-h-[48px]"
             >
-              إتمام الطلب (معاينة تجريبية)
+              إتمام الطلب
             </button>
           </div>
         )}

@@ -20,6 +20,8 @@ import {
   getCartItemTotal,
 } from '../utils/menuHelpers';
 
+import { getOrderWhatsappNumber } from '../utils/orderWhatsapp';
+
 interface CheckoutModalProps {
   isOpen: boolean;
   items: CartItem[];
@@ -44,6 +46,19 @@ export function CheckoutModal({
     notes: '',
     preferredBranchId: branches[0]?.id ?? 'shobra',
   });
+  const [shiftNumber, setShiftNumber] = useState(() => getOrderWhatsappNumber());
+  useEffect(() => {
+    if (!isOpen) return;
+    const refresh = () => setShiftNumber(getOrderWhatsappNumber());
+    refresh();
+    const timer = window.setInterval(refresh, 1000);
+    window.addEventListener('focus', refresh);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refresh);
+    };
+  }, [isOpen]);
+
   const [copied, setCopied] = useState(false);
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
   const [validationError, setValidationError] = useState('');
@@ -93,12 +108,19 @@ export function CheckoutModal({
       return;
     }
     setValidationError('');
-    const demoRef = `DEMO-${Math.floor(1000 + Math.random() * 9000)}`;
+    const demoRef = `Q-${Math.floor(1000 + Math.random() * 9000)}`;
     setSubmittedRef(demoRef);
   };
 
-  const hasConfiguredWhatsapp =
-    settings.demoWhatsappEnabled && settings.demoWhatsappNumber.trim().length >= 8;
+  const openWhatsapp = () => {
+    const number = getOrderWhatsappNumber();
+    setShiftNumber(number);
+    if (!settings.demoWhatsappEnabled || !number) return;
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(previewMessage)}`, '_blank', 'noopener,noreferrer');
+  };
+  const availability = !settings.demoWhatsappEnabled
+    ? 'طلبات واتساب غير متاحة حالياً'
+    : shiftNumber ? 'متاح الآن' : 'الطلبات بتفتح الساعة ١١ الصبح بتوقيت مصر';
 
   return (
     <div
@@ -119,7 +141,7 @@ export function CheckoutModal({
               إتمام الطلب ومعاينة رسالة الواتساب
             </h2>
             <p className="text-xs text-[#A8A29E] mt-0.5">
-              نموذج عرض تفاعلي لمحاكاة تجربة طلب العميل الكاملة
+              راجع طلبك قبل إرساله للمطعم على واتساب
             </p>
           </div>
           <button
@@ -136,7 +158,7 @@ export function CheckoutModal({
         <div className="px-5 py-3 bg-[#D4AF37]/10 border-b border-[#D4AF37]/25 flex items-start gap-2.5 text-xs sm:text-sm text-[#F8F5EF]">
           <Info className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
           <p>
-            هذا الموقع نموذج عرض تفاعلي (Demo). لا يتم إرسال طلبات حقيقية للمطعم أو فتح واتساب فعلي حتى يتم ربط رقم واتساب معتمد من الإدارة.
+            مواعيد طلبات واتساب يومياً من ١١ الصبح لحد ٤ الفجر بتوقيت مصر.
           </p>
         </div>
 
@@ -150,13 +172,13 @@ export function CheckoutModal({
 
               <div>
                 <p className="text-xs text-[#D4AF37] font-semibold mb-1">
-                  محاكاة نجاح الطلب — العرض التجريبي
+                  اضغط على فتح واتساب وابعت رسالة الطلب
                 </p>
                 <h3 className="font-display text-2xl font-bold text-[#F8F5EF]">
                   تم تجهيز رسالة الطلب بنجاح
                 </h3>
                 <p className="text-sm text-[#A8A29E] mt-2 tabular-nums">
-                  رقم المعاينة التجريبي: {submittedRef} · الإجمالي: {formatPrice(total)}
+                  رقم المعاينة: {submittedRef} · الإجمالي: {formatPrice(total)}
                 </p>
               </div>
 
@@ -176,17 +198,16 @@ export function CheckoutModal({
                   <span>{copied ? 'تم نسخ الرسالة' : 'نسخ نص الرسالة'}</span>
                 </button>
 
-                {hasConfiguredWhatsapp && (
-                  <a
-                    href={`https://wa.me/${settings.demoWhatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(previewMessage)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#D4AF37] text-[#090909] text-sm font-bold"
+                {settings.demoWhatsappEnabled && shiftNumber ? (
+                  <button
+                    type="button"
+                    onClick={openWhatsapp}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#D4AF37] text-[#090909] text-sm font-bold cursor-pointer"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    <span>فتح معاينة واتساب بالرقم المربوط</span>
-                  </a>
-                )}
+                    <span>فتح واتساب لإرسال الطلب</span>
+                  </button>
+                ) : <p role="status">{availability}</p>}
 
                 <button
                   type="button"
@@ -322,11 +343,9 @@ export function CheckoutModal({
                 </div>
 
                 <div className="px-4 py-3 bg-[#111111] border-t border-white/[0.08] flex items-center justify-between text-xs text-[#A8A29E]">
-                  <span>حالة الربط الفعلي</span>
+                  <span>طلبات واتساب</span>
                   <span className="text-[#D4AF37] font-medium">
-                    {hasConfiguredWhatsapp
-                      ? `مربوط للتجربة (${settings.demoWhatsappNumber})`
-                      : 'غير مربوط (وضع العرض التجريبي)'}
+                    {availability}
                   </span>
                 </div>
               </div>
@@ -349,7 +368,7 @@ export function CheckoutModal({
               form="checkout-form"
               className="px-7 py-3 rounded-lg bg-[#B91C1C] hover:bg-[#991B1B] text-white font-semibold text-sm sm:text-base transition-colors cursor-pointer min-h-[48px]"
             >
-              تأكيد معاينة الطلب التجريبي
+              مراجعة الطلب
             </button>
           </div>
         )}
