@@ -111,7 +111,7 @@ export function ProductModal({
             <FoodImage
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/30 to-black/45"

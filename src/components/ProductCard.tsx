@@ -77,18 +77,8 @@ export function ProductCard({
         <FoodImage
           src={item.image}
           alt={item.name}
-          className={`w-full h-full ${
-            item.image
-              ? 'object-cover transition-transform duration-300 group-hover:scale-[1.04]'
-              : ''
-          }`}
+          className="w-full h-full object-contain"
         />
-        {item.image && (
-          <div
-            className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#171717] via-[#171717]/40 to-transparent pointer-events-none"
-            aria-hidden="true"
-          />
-        )}
       </button>
 
       {/* Card Body */}

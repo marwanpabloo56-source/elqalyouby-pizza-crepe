@@ -77,11 +77,7 @@ export function FeaturedShowcase({
                       <FoodImage
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      <div
-                        className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#171717] via-[#171717]/35 to-transparent pointer-events-none"
-                        aria-hidden="true"
+                        className="w-full h-full object-contain"
                       />
                     </button>
 
