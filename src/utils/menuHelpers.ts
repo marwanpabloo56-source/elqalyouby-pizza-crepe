@@ -2,11 +2,17 @@ import { SIZE_LABELS } from '../data/menuData';
 import {
   BranchInfo,
   CartItem,
+  CategoryId,
   CustomerCheckoutInfo,
   MenuItem,
   RestaurantSettings,
   SizeKey,
 } from '../types/menu';
+
+const PIZZA_TYPE_LABELS: Partial<Record<CategoryId, string>> = {
+  'italian-pizza': 'إيطالي',
+  'oriental-pizza': 'شرقي',
+};
 
 export const ORDERED_SIZES: SizeKey[] = ['small', 'medium', 'large', 'single'];
 
@@ -68,11 +74,13 @@ export function formatWhatsappOrderMessage(params: {
 
   items.forEach((item, index) => {
     const sizeLabel = SIZE_LABELS[item.selectedSize];
+    const pizzaTypeLabel = PIZZA_TYPE_LABELS[item.categoryId];
+    const typeTag = pizzaTypeLabel ? ` (${pizzaTypeLabel})` : '';
     const unitWithExtras = getCartItemUnitTotal(item);
     const lineTotal = unitWithExtras * item.quantity;
     const siyamiTag = item.isSiyami ? ' [صيامي]' : '';
     lines.push(
-      `${index + 1}. ${item.name} (${sizeLabel})${siyamiTag} × ${item.quantity} = ${lineTotal} ج.م`
+      `${index + 1}. ${item.name}${typeTag} (${sizeLabel})${siyamiTag} × ${item.quantity} = ${lineTotal} ج.م`
     );
     if (item.selectedExtras.length > 0) {
       lines.push(
